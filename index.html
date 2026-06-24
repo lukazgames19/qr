@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect - Lucas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #ff0055; 
+            --primary-glow: rgba(255, 0, 85, 0.6);
+            --success-color: #00ff99;
+            --success-glow: rgba(0, 255, 153, 0.4);
+            --bg-gradient: linear-gradient(135deg, #0f0c29, #24243e, #1a1540);
+        }
+
+        /* Désactivation du zoom élastique sur mobile au swipe */
+        html, body {
+            overflow-x: hidden;
+            background-color: #0f0c29;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            font-family: 'Share Tech Mono', monospace;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            
+            /* Arrière-plan animé plus fluide et moins énergivore pour la batterie des téléphones */
+            background: linear-gradient(45deg, #0f0c29, #1b1647, #24243e, #0f0c29);
+            background-size: 300% 300%;
+            animation: technoGradient 12s ease-in-out infinite;
+        }
+
+        @keyframes technoGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .profile-card {
+            text-align: center;
+            max-width: 340px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 35px 25px;
+            border-radius: 24px;
+            background: rgba(15, 12, 41, 0.50); /* Fond plus sombre pour faire ressortir le texte */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); /* Compatibilité iPhone/Safari */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            box-sizing: border-box;
+        }
+
+        .avatar-glow {
+            width: 12px;
+            height: 12px;
+            background: var(--success-color);
+            border-radius: 50%;
+            margin: 0 auto 15px auto;
+            box-shadow: 0 0 12px var(--success-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 153, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 255, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 153, 0); }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin: 0;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: white;
+            text-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        p {
+            font-size: 0.95rem;
+            color: #b3b3b3;
+            margin: 15px 0 35px 0;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+        }
+
+        .link-button {
+            display: block;
+            background: rgba(255, 0, 85, 0.05);
+            border: 2px solid var(--primary-color); /* Bordure légèrement plus épaisse pour le tactile */
+            color: white;
+            padding: 16px;
+            margin-bottom: 18px;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 1.05rem;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Supprime le flash bleu moche sur iPhone */
+        }
+
+        /* Gestion propre du survol : évite que le bouton reste bloqué en mode "hover" sur smartphone après l'avoir cliqué */
+        @media (hover: hover) {
+            .link-button:hover {
+                background: var(--primary-color);
+                box-shadow: 0 0 25px var(--primary-glow);
+                transform: translateY(-2px);
+            }
+        }
+
+        .link-button:active {
+            transform: scale(0.98);
+            background: var(--primary-color);
+        }
+
+        .copy-btn {
+            width: 100%;
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #b3b3b3;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @media (hover: hover) {
+            .copy-btn:hover {
+                background: rgba(255, 255, 255, 0.12);
+                color: white;
+            }
+        }
+
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <div class="avatar-glow"></div>
+        
+        <h1>LUCAS</h1>
+        <p>Ravi de t'avoir croisé ! ⚡️<br>Ajoute-moi pour qu'on puisse capter.</p>
+
+        <a href="https://instagram.com/c_lucas____" target="_blank" class="link-button">Instagram</a>
+        
+        <button class="copy-btn" id="copyBtn" onclick="copyPseudo()">
+            Copier le pseudo
+        </button>
+    </div>
+
+    <script>
+        function copyPseudo() {
+            const pseudo = 'c_lucas____';
+            const btn = document.getElementById('copyBtn');
+            const originalText = btn.innerText;
+
+            // STRATÉGIE DE SÉCURITÉ : Double méthode pour le presse-papier mobile
+            if (navigator.clipboard && window.isSecureContext) {
+                // Méthode moderne standard
+                navigator.clipboard.writeText(pseudo)
+                    .then(() => afficherSucces(btn, originalText))
+                    .catch(() => fallbackCopy(pseudo, btn, originalText));
+            } else {
+                // Méthode de secours pour les navigateurs intégrés (In-App)
+                fallbackCopy(pseudo, btn, originalText);
+            }
+        }
+
+        // Système de secours pour copier le texte à l'ancienne si l'iPhone/Android bloque
+        function fallbackCopy(text, btn, originalText) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            // On le cache hors de l'écran pour que l'utilisateur ne voie rien
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                afficherSucces(btn, originalText);
+            } catch (err) {
+                btn.innerText = '❌ Erreur de copie';
+                btn.style.borderColor = '#ff0055';
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // Animation visuelle de validation de la copie
+        function afficherSucces(btn, originalText) {
+            btn.innerText = '✅ Pseudo copié !';
+            btn.style.color = '#00ff99';
+            btn.style.borderColor = 'rgba(0, 255, 153, 0.3)';
+            btn.style.background = 'rgba(0, 255, 153, 0.05)';
+            
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.color = '#b3b3b3';
+                btn.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+                btn.style.background = 'rgba(255, 255, 255, 0.06)';
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>
