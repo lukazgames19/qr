@@ -11,11 +11,9 @@
             --primary-color: #ff0055; 
             --primary-glow: rgba(255, 0, 85, 0.6);
             --success-color: #00ff99;
-            --success-glow: rgba(0, 255, 153, 0.4);
             --bg-gradient: linear-gradient(135deg, #0f0c29, #24243e, #1a1540);
         }
 
-        /* Désactivation du zoom élastique sur mobile au swipe */
         html, body {
             overflow-x: hidden;
             background-color: #0f0c29;
@@ -33,7 +31,6 @@
             justify-content: center;
             box-sizing: border-box;
             
-            /* Arrière-plan animé plus fluide et moins énergivore pour la batterie des téléphones */
             background: linear-gradient(45deg, #0f0c29, #1b1647, #24243e, #0f0c29);
             background-size: 300% 300%;
             animation: technoGradient 12s ease-in-out infinite;
@@ -52,9 +49,9 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 35px 25px;
             border-radius: 24px;
-            background: rgba(15, 12, 41, 0.50); /* Fond plus sombre pour faire ressortir le texte */
+            background: rgba(15, 12, 41, 0.60);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px); /* Compatibilité iPhone/Safari */
+            -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
             box-sizing: border-box;
         }
@@ -87,34 +84,40 @@
         p {
             font-size: 0.95rem;
             color: #b3b3b3;
-            margin: 15px 0 35px 0;
+            margin: 15px 0 30px 0;
             line-height: 1.5;
             letter-spacing: 0.5px;
+        }
+
+        /* Conteneur pour empiler les boutons proprement */
+        .links-container {
+            width: 100%;
+            margin-bottom: 20px;
         }
 
         .link-button {
             display: block;
             background: rgba(255, 0, 85, 0.05);
-            border: 2px solid var(--primary-color); /* Bordure légèrement plus épaisse pour le tactile */
+            border: 2px solid var(--primary-color);
             color: white;
-            padding: 16px;
-            margin-bottom: 18px;
+            padding: 15px;
+            margin-bottom: 12px; /* Espace régulier entre chaque bouton */
             text-decoration: none;
             border-radius: 14px;
             font-weight: bold;
-            font-size: 1.05rem;
+            font-size: 1rem;
             transition: all 0.2s ease;
             text-transform: uppercase;
             letter-spacing: 2px;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* Supprime le flash bleu moche sur iPhone */
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Gestion propre du survol : évite que le bouton reste bloqué en mode "hover" sur smartphone après l'avoir cliqué */
+        /* Effet au survol uniquement sur PC */
         @media (hover: hover) {
             .link-button:hover {
                 background: var(--primary-color);
-                box-shadow: 0 0 25px var(--primary-glow);
+                box-shadow: 0 0 20px var(--primary-glow);
                 transform: translateY(-2px);
             }
         }
@@ -158,10 +161,20 @@
         <div class="avatar-glow"></div>
         
         <h1>LUCAS</h1>
-        <p>Ravi de t'avoir croisé ! ⚡️<br>Ajoute-moi pour qu'on puisse capter.</p>
+        <p>Ravi de t'avoir croisé ! ⚡️<br>Retrouve mes réseaux et liens ci-dessous.</p>
 
-        <a href="https://instagram.com/c_lucas____" target="_blank" class="link-button">Instagram</a>
+        <!-- ZONE MODULAIRE : C'est ici que tu ajoutes ou enlèves des liens -->
+        <div class="links-container">
+            
+            <a href="https://instagram.com/c_lucas____" target="_blank" class="link-button">Instagram</a>
+            
+            <!-- EXEMPLE DE FUTURS BOUTONS (Tu as juste à enlever les commentaires `<!--` pour les activer) -->
+            <!-- <a href="LIEN_DE_TON_CHOIX" target="_blank" class="link-button">Mon GitHub</a> -->
+            <!-- <a href="LIEN_DE_TON_CHOIX" target="_blank" class="link-button">Discord / Snapchat</a> -->
+            
+        </div>
         
+        <!-- Le bouton Copier reste sagement tout en bas -->
         <button class="copy-btn" id="copyBtn" onclick="copyPseudo()">
             Copier le pseudo
         </button>
@@ -173,23 +186,18 @@
             const btn = document.getElementById('copyBtn');
             const originalText = btn.innerText;
 
-            // STRATÉGIE DE SÉCURITÉ : Double méthode pour le presse-papier mobile
             if (navigator.clipboard && window.isSecureContext) {
-                // Méthode moderne standard
                 navigator.clipboard.writeText(pseudo)
-                    .then(() => afficherSucces(btn, originalText))
+                    .then(() =>顯示Succes(btn, originalText))
                     .catch(() => fallbackCopy(pseudo, btn, originalText));
             } else {
-                // Méthode de secours pour les navigateurs intégrés (In-App)
                 fallbackCopy(pseudo, btn, originalText);
             }
         }
 
-        // Système de secours pour copier le texte à l'ancienne si l'iPhone/Android bloque
         function fallbackCopy(text, btn, originalText) {
             const textArea = document.createElement("textarea");
             textArea.value = text;
-            // On le cache hors de l'écran pour que l'utilisateur ne voie rien
             textArea.style.position = "fixed";
             textArea.style.left = "-999999px";
             document.body.appendChild(textArea);
@@ -200,13 +208,11 @@
                 afficherSucces(btn, originalText);
             } catch (err) {
                 btn.innerText = '❌ Erreur de copie';
-                btn.style.borderColor = '#ff0055';
             }
             
             document.body.removeChild(textArea);
         }
 
-        // Animation visuelle de validation de la copie
         function afficherSucces(btn, originalText) {
             btn.innerText = '✅ Pseudo copié !';
             btn.style.color = '#00ff99';
